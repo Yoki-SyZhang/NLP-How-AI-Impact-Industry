@@ -52,11 +52,11 @@ The objective is to:
 
 ## Project Pipeline:
 
-**1. Raw News Articles**
+**0. Raw News Articles**
 
 ---
 
-**2. Clean + Filter**  
+**1. Clean + Filter**  
 (01_Data_Exploration_and_Cleaning.ipynb -> df_clean.parquet)
 
 1. Data profiling
@@ -67,13 +67,13 @@ The objective is to:
     * regex
     * unicode normalization
     * min length filter
-3. Relevance filtering: 不是所有文章都 relevant。
+3. Relevance filtering: not all ariticles are relevant。
+    * Keyword pre-filter Then LLM confirm
     * zero-shot classification API
-    * 让 LLM 判断是否关于 “AI impact on industries”
 
 ---
 
-**3. Topic Discovery**  
+**2. Topic Discovery**  
 (02_Topic_Modeling.ipynb -> df_topic_assigned.parquet & topic_keywords.json)
 
 1. Vectorization
@@ -82,7 +82,7 @@ The objective is to:
 
 ---
 
-**4. Entity Extraction**  
+**3. Entity Extraction**  
 (03_Entity_Extraction.ipynb -> df_entities.parquet)
 
 * How to Identify industries
@@ -92,12 +92,12 @@ The objective is to:
     * GPE（country）
     * Possibly JOB_ROLE (optional)
 * Industry Mapping
-    * 基于 topic label 关联 industry
-    * 或用 API 辅助分类公司所属行业
+    * Associate industry based on topic label
+    * use API help mapping
 
 ---
 
-**5. Sentiment Modeling**  
+**4. Sentiment Modeling**  
 (04_Sentiment_Model_Training.ipynb -> model file)
 
 1. study Aspect-Based Sentiment Analysis
@@ -110,7 +110,7 @@ The objective is to:
 
 ---
 
-**6. Topic-level + Entity-level Aggregation**  
+**5. Topic-level + Entity-level Aggregation**  
 (05_Topic_and_Entity_Sentiment.ipynb)
 
 * Predict sentiment
@@ -123,7 +123,7 @@ The objective is to:
 
 ---
 
-**7. Business Insight Layer**  
+**6. Business Insight Layer**  
 (06_Impact_Mechanism_Analysis.ipynb)
 
 * Answer
@@ -135,3 +135,55 @@ The objective is to:
     * Comparative analysis
     * TextRank
     * LLM API
+
+---
+## Expected Folder Structure
+```
+NLP-How-AI-Impact-Industry/
+│
+├── README.md
+├── requirements.txt
+├── .gitignore
+│
+├── data/
+│   ├── raw/
+│   │   └── news_final_project.parquet
+│   │
+│   ├── interim/
+│   │   ├── df_clean.parquet
+│   │   ├── df_topic_assigned.parquet
+│   │   ├── df_entities.parquet
+│   │   └── sentiment_predictions.parquet
+│   │
+│   └── external/
+│       └── labeled_sentiment_data.csv
+│
+├── notebooks/
+│   ├── 01_Data_Exploration_and_Cleaning.ipynb
+│   ├── 02_Topic_Modeling.ipynb
+│   ├── 03_Entity_Extraction.ipynb
+│   ├── 04_Sentiment_Model_Training.ipynb
+│   ├── 05_Topic_and_Entity_Sentiment.ipynb
+│   └── 06_Impact_Mechanism_Analysis.ipynb
+│
+├── models/
+│   └── sentiment_model/
+│       ├── config.json
+│       ├── pytorch_model.bin
+│       └── tokenizer/
+│
+├── artifacts/
+│   ├── topic_keywords.json
+│   ├── topic_labels.json
+│   ├── llm_outputs/
+│   │   ├── topic_labeling.json
+│   │   └── insight_summaries.json
+│   └── plots/
+│       ├── topic_distribution.png
+│       ├── sentiment_over_time.png
+│       └── entity_sentiment_trend.png
+│
+└── presentation/
+    └── NLP_AI_Impact_Final_Project.pdf
+```
+
