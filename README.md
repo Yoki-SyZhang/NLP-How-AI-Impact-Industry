@@ -50,14 +50,15 @@ The objective is to:
   - Comparative analysis across industries  
   - Structured insight generation  
 
-
 ## Project Pipeline:
-**Raw News Articles**
 
-↓
+**1. Raw News Articles**
 
-**Clean + Filter**   
-(01_Data_Exploration_and_Cleaning.ipynb ->  df_clean.parquet)
+---
+
+**2. Clean + Filter**  
+(01_Data_Exploration_and_Cleaning.ipynb -> df_clean.parquet)
+
 1. Data profiling
     * HTML artifacts
     * Language filtering
@@ -69,19 +70,21 @@ The objective is to:
 3. Relevance filtering: 不是所有文章都 relevant。
     * zero-shot classification API
     * 让 LLM 判断是否关于 “AI impact on industries”
-  
-↓
-      
-**Topic Discovery**
-(02_Topic_Modeling.ipynb  ->  df_topic_assigned.parquet & topic_keywords.json)
+
+---
+
+**3. Topic Discovery**  
+(02_Topic_Modeling.ipynb -> df_topic_assigned.parquet & topic_keywords.json)
+
 1. Vectorization
 2. Topic modeling: BERTopic and Evaluate topic coherence
 3. Define Topic → Industry mapping logic (LLM API)
 
-↓
+---
 
-**Entity Extraction** 
+**4. Entity Extraction**  
 (03_Entity_Extraction.ipynb -> df_entities.parquet)
+
 * How to Identify industries
 * Find pretrained NER model
     * ORG（company）
@@ -91,35 +94,38 @@ The objective is to:
 * Industry Mapping
     * 基于 topic label 关联 industry
     * 或用 API 辅助分类公司所属行业
-  
-↓
-      
-**Sentiment Modeling**
-(04_Sentiment_Model_Training.ipynb  ->  model file)
+
+---
+
+**5. Sentiment Modeling**  
+(04_Sentiment_Model_Training.ipynb -> model file)
+
 1. study Aspect-Based Sentiment Analysis
-2. Find labeled data  ->  sentiment_model.pt
+2. Find labeled data -> sentiment_model.pt
     * Financial PhraseBank
     * Kaggle news sentiment dataset
 3. Train model
     * DistilBERT
     * fine-tune
-      
-↓
-      
-**Topic-level + Entity-level Aggregation**
+
+---
+
+**6. Topic-level + Entity-level Aggregation**  
 (05_Topic_and_Entity_Sentiment.ipynb)
+
 * Predict sentiment
 * Topic-level aggregation ()
 * Entity-level sentiment (ORG: company + industry, TECH)
 * Visualization over time
-   - Industry sentiment trend
-	- Company sentiment volatility
-	- Emerging industries (growth curve)
-      
-↓
-      
-**Business Insight Layer**
+    - Industry sentiment trend
+    - Company sentiment volatility
+    - Emerging industries (growth curve)
+
+---
+
+**7. Business Insight Layer**  
 (06_Impact_Mechanism_Analysis.ipynb)
+
 * Answer
     * how those industries and their companies will be impacted by what means / technologies
     * Provide insights into what can make AI adoption successful or unsuccessful.
@@ -128,4 +134,4 @@ The objective is to:
     * Topic modeling within positive vs negative clusters
     * Comparative analysis
     * TextRank
-    * LLM API 
+    * LLM API
